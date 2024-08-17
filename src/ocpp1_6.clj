@@ -6,9 +6,16 @@
 
 (s/def :identifier/id-token (s/and string? (complement str/blank?) #(>= 20 (count %))))
 
+(s/def :identifier/id-tag :identifier/id-token)
 (s/def :identifier/parent-id-tag :identifier/id-token)
 (s/def :identifier/expiry-date inst?)
 (s/def :identifier/id-tag-info
   (s/keys :req-un [:authorization/status]
           :opt-un [:identifier/expiry-date
                    :identifier/parent-id-tag]))
+
+
+(s/def :authorize/req
+  (s/keys :req-un [:identifier/id-tag]))
+(s/def :authorize/conf
+  (s/keys :req-un [:identifier/id-tag-info]))
